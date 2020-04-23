@@ -3,13 +3,13 @@
 static RTC_HandleTypeDef Rtc_Handle;
 static uint32_t rtc_info = 0;
 
-//STM32F1 RTC LSE ×îµÍ¼ÆÊ±µ¥Î»S
+//STM32F1 RTC LSE æœ€ä½è®¡æ—¶å•ä½S
 void PVD_Init(void)
 {
 	__HAL_RCC_PWR_CLK_ENABLE();
 	PWR_PVDTypeDef PWR_PVDStruct;
 	PWR_PVDStruct.PVDLevel = PWR_PVDLEVEL_4;// 2.8V
-	PWR_PVDStruct.Mode = PWR_PVD_MODE_IT_RISING;//½µÖÁãĞÖµµçÑ¹Ê±´¥·¢
+	PWR_PVDStruct.Mode = PWR_PVD_MODE_IT_RISING;//é™è‡³é˜ˆå€¼ç”µå‹æ—¶è§¦å‘
 
 	HAL_PWR_ConfigPVD(&PWR_PVDStruct);
 	HAL_PWR_EnablePVD();
@@ -18,7 +18,7 @@ void PVD_Init(void)
     HAL_NVIC_EnableIRQ(PVD_PVM_IRQn);
 }
 
-/* ÖØĞ´»Øµ÷º¯Êı */
+/* é‡å†™å›è°ƒå‡½æ•° */
 void HAL_PWR_PVDCallback(void)
 {
 	HAL_RTCEx_BKUPWrite(&Rtc_Handle,RTC_BKP_DR1,0x0001);
@@ -36,22 +36,22 @@ static evm_val_t evm_module_rtc(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 	RCC_OscInitTypeDef        RCC_OscInitStruct;
 	RCC_PeriphCLKInitTypeDef  PeriphClkInitStruct;
 
-	// ÅäÖÃRTCÍâÉè
+	// é…ç½®RTCå¤–è®¾
 	Rtc_Handle.Instance = RTC;
 
-	/*Ê¹ÄÜ PWR Ê±ÖÓ*/
+	/*ä½¿èƒ½ PWR æ—¶é’Ÿ*/
 	__HAL_RCC_RTC_ENABLE();
-	/* PWR_CR:DBFÖÃ1£¬Ê¹ÄÜRTC¡¢RTC±¸·İ¼Ä´æÆ÷ºÍ±¸·İSRAMµÄ·ÃÎÊ */
+	/* PWR_CR:DBFç½®1ï¼Œä½¿èƒ½RTCã€RTCå¤‡ä»½å¯„å­˜å™¨å’Œå¤‡ä»½SRAMçš„è®¿é—® */
 	HAL_PWR_EnableBkUpAccess();
 	  HAL_PWR_EnableBkUpAccess();
 
-	/* ³õÊ¼»¯LSE */ 
+	/* åˆå§‹åŒ–LSE */ 
 	RCC_OscInitStruct.OscillatorType =  RCC_OSCILLATORTYPE_LSE;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
 	RCC_OscInitStruct.LSEState = RCC_LSE_ON;
 	RCC_OscInitStruct.LSIState = RCC_LSI_OFF;
 	HAL_RCC_OscConfig(&RCC_OscInitStruct);
-	/* Ñ¡ÔñLSE×öÎªRTCµÄÊ±ÖÓÔ´ */
+	/* é€‰æ‹©LSEåšä¸ºRTCçš„æ—¶é’Ÿæº */
 	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
 	PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
 	HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
@@ -59,28 +59,28 @@ static evm_val_t evm_module_rtc(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 	/* Configures the External Low Speed oscillator (LSE) drive capability */
 	__HAL_RCC_LSE_CONFIG(RCC_LSE_ON);  //
 	
-	/* Ê¹ÄÜRTCÊ±ÖÓ */
+	/* ä½¿èƒ½RTCæ—¶é’Ÿ */
 	__HAL_RCC_RTC_ENABLE(); 
 
-	/* µÈ´ı RTC APB ¼Ä´æÆ÷Í¬²½ */
+	/* ç­‰å¾… RTC APB å¯„å­˜å™¨åŒæ­¥ */
 	HAL_RTC_WaitForSynchro(&Rtc_Handle);
 
-	/*=====================³õÊ¼»¯Í¬²½/Òì²½Ô¤·ÖÆµÆ÷µÄÖµ======================*/
-	/* Çı¶¯ÈÕÀúµÄÊ±ÖÓck_spare = LSE/[(255+1)*(127+1)] = 1HZ */
+	/*=====================åˆå§‹åŒ–åŒæ­¥/å¼‚æ­¥é¢„åˆ†é¢‘å™¨çš„å€¼======================*/
+	/* é©±åŠ¨æ—¥å†çš„æ—¶é’Ÿck_spare = LSE/[(255+1)*(127+1)] = 1HZ */
 
 	Rtc_Handle.Init.HourFormat = RTC_HOURFORMAT_24;
 
-	/* ÉèÖÃÒì²½Ô¤·ÖÆµÆ÷µÄÖµ */
+	/* è®¾ç½®å¼‚æ­¥é¢„åˆ†é¢‘å™¨çš„å€¼ */
 	Rtc_Handle.Init.AsynchPrediv = 127;
 	
-	/* ÉèÖÃÍ¬²½Ô¤·ÖÆµÆ÷µÄÖµ */
+	/* è®¾ç½®åŒæ­¥é¢„åˆ†é¢‘å™¨çš„å€¼ */
 	Rtc_Handle.Init.SynchPrediv  = 255;	
 	Rtc_Handle.Init.OutPut   = RTC_OUTPUT_DISABLE; 
 	
 	Rtc_Handle.Init.OutPutRemap = RTC_OUTPUT_REMAP_NONE;
 	Rtc_Handle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
 	Rtc_Handle.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-	/* ÓÃRTC_InitStructureµÄÄÚÈİ³õÊ¼»¯RTC¼Ä´æÆ÷ */
+	/* ç”¨RTC_InitStructureçš„å†…å®¹åˆå§‹åŒ–RTCå¯„å­˜å™¨ */
 	uint32_t time_start = HAL_GetTick();
 	HAL_RTC_Init(&Rtc_Handle);
 	rtc_info = rtc_info | ((HAL_GetTick() - time_start)&0xFFFF);
@@ -99,12 +99,12 @@ static evm_val_t evm_module_rtc(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 //RTC.datetime([datetimetuple])
 static evm_val_t evm_module_rtc_datetime(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 {
-	if( argc != 8 || argc != 0) EVM_ARG_LENGTH_ERR;
+	if( argc != 8 && argc != 0) EVM_ARG_LENGTH_ERR;
 	if(argc == 0) 
 	{
 		RTC_TimeTypeDef RTC_TimeStructure;
 		RTC_DateTypeDef RTC_DateStructure;
-		// »ñÈ¡ÈÕÀú
+		// è·å–æ—¥å†
 		HAL_RTC_GetTime(&Rtc_Handle, &RTC_TimeStructure, RTC_FORMAT_BIN);
 		HAL_RTC_GetDate(&Rtc_Handle, &RTC_DateStructure, RTC_FORMAT_BIN);
 	
@@ -132,7 +132,7 @@ static evm_val_t evm_module_rtc_datetime(evm_t *e, evm_val_t *p, int argc, evm_v
 		RTC_TimeStructure.Hours	  = evm_2_integer(v+4);
 		RTC_TimeStructure.Minutes = evm_2_integer(v+5);
 		RTC_TimeStructure.Seconds = evm_2_integer(v+6);
-		//STM32f1 rtc²»Ö§³Ö subseconds¡¢×îºóÒ»Î»Ê¡È¥
+		//STM32f1 rtcä¸æ”¯æŒ subsecondsã€æœ€åä¸€ä½çœå»
 		
 		HAL_RTC_SetTime(&Rtc_Handle,&RTC_TimeStructure, RTC_FORMAT_BIN);
 		HAL_RTC_SetDate(&Rtc_Handle,&RTC_DateStructure, RTC_FORMAT_BIN);
@@ -141,7 +141,7 @@ static evm_val_t evm_module_rtc_datetime(evm_t *e, evm_val_t *p, int argc, evm_v
 	return EVM_VAL_UNDEFINED;
 }
 
-//RTC.wakeup(timeout, callback=None)		F1²»Ö§³ÖºÁÃë¶¨Ê±
+//RTC.wakeup(timeout, callback=None)		F1ä¸æ”¯æŒæ¯«ç§’å®šæ—¶
 static evm_val_t evm_module_rtc_wakeup(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 {
 	return EVM_VAL_UNDEFINED;
