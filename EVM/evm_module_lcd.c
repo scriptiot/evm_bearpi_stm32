@@ -52,7 +52,7 @@ static evm_val_t evm_module_lcd_set_pixel(evm_t *e, evm_val_t *p, int argc, evm_
 //LCD.draw_line(x1, y1, x2, y2)
 static evm_val_t evm_module_lcd_draw_line(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 {
-	if( argc != 4 ){
+	if( argc > 3 ){
 		if( !evm_is_number(v) ) EVM_ARG_TYPE_ERR;
 		if( !evm_is_number(v + 1) ) EVM_ARG_TYPE_ERR;
 		if( !evm_is_number(v + 2) ) EVM_ARG_TYPE_ERR;
@@ -69,7 +69,7 @@ static evm_val_t evm_module_lcd_draw_line(evm_t *e, evm_val_t *p, int argc, evm_
 //LCD.draw_rect(x1, y1, x2, y2)
 static evm_val_t evm_module_lcd_draw_rect(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 {
-	if( argc != 4 ){
+	if( argc > 3 ){
 		if( !evm_is_number(v) ) EVM_ARG_TYPE_ERR;
 		if( !evm_is_number(v + 1) ) EVM_ARG_TYPE_ERR;
 		if( !evm_is_number(v + 2) ) EVM_ARG_TYPE_ERR;
@@ -86,7 +86,7 @@ static evm_val_t evm_module_lcd_draw_rect(evm_t *e, evm_val_t *p, int argc, evm_
 //LCD.fill_rect(x1, y1, x2, y2,color)
 static evm_val_t evm_module_lcd_fill_rect(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 {
-	if( argc != 5 ){
+	if( argc > 4 ){
 		if( !evm_is_number(v) ) EVM_ARG_TYPE_ERR;
 		if( !evm_is_number(v + 1) ) EVM_ARG_TYPE_ERR;
 		if( !evm_is_number(v + 2) ) EVM_ARG_TYPE_ERR;
@@ -107,7 +107,7 @@ static evm_val_t evm_module_lcd_fill_rect(evm_t *e, evm_val_t *p, int argc, evm_
 //LCD.draw_circle(x, y, radius)
 static evm_val_t evm_module_lcd_draw_circle(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 {
-	if( argc != 3 ){
+	if( argc > 2 ){
 		if( !evm_is_number(v) ) EVM_ARG_TYPE_ERR;
 		if( !evm_is_number(v + 1) ) EVM_ARG_TYPE_ERR;
 		if( !evm_is_number(v + 2) ) EVM_ARG_TYPE_ERR;
@@ -137,7 +137,7 @@ static evm_val_t evm_module_lcd_draw_circle(evm_t *e, evm_val_t *p, int argc, ev
 //LCD.draw_text(x, y,w,h,size,text)
 static evm_val_t evm_module_lcd_draw_text(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 {
-	if( argc != 6 ){
+	if( argc > 5 ){
 		if( !evm_is_number(v) ) EVM_ARG_TYPE_ERR;
 		if( !evm_is_number(v + 1) ) EVM_ARG_TYPE_ERR;
 		if( !evm_is_string(v + 2) ) EVM_ARG_TYPE_ERR;
@@ -159,7 +159,7 @@ static evm_val_t evm_module_lcd_draw_text(evm_t *e, evm_val_t *p, int argc, evm_
 //LCD.set_text_color(rgb)
 static evm_val_t evm_module_lcd_set_text_color(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 {
-	if( argc != 1 ){
+	if( argc > 0 ){
 		if( !evm_is_number(v) ) EVM_ARG_TYPE_ERR;
 		int color = evm_2_integer(v);
 		LCD_Set_Color(color);
@@ -170,7 +170,7 @@ static evm_val_t evm_module_lcd_set_text_color(evm_t *e, evm_val_t *p, int argc,
 //LCD.set_background_color(rgb)
 static evm_val_t evm_module_lcd_set_background_color(evm_t *e, evm_val_t *p, int argc, evm_val_t *v)
 {
-	if( argc != 1 ){
+	if( argc > 0 ){
 		if( !evm_is_number(v) ) EVM_ARG_TYPE_ERR;
 		int color = evm_2_integer(v);
 		LCD_Clear(color);

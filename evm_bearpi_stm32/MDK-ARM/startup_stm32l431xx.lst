@@ -605,12 +605,12 @@ ARM Macro Assembler    Page 10
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=..\..\output\startup_stm32l431xx.d -o..\..\output\startup_stm32
-l431xx.o -ID:\workspace\upython\evm_bearpi_stm32_final\evm_bearpi_stm32\MDK-ARM
-\RTE -ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include -ID:\Keil_v5\ARM\
-PACK\Keil\STM32L4xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include --prede
-fine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 521" --predefine="
-_RTE_ SETA 1" --predefine="STM32L431xx SETA 1" --list=startup_stm32l431xx.lst s
-tartup_stm32l431xx.s
+l431xx.o -ID:\scriptiot\evm_bearpi_stm32_final\evm_bearpi_stm32\MDK-ARM\RTE -IC
+:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM
+32L4xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include --predefine="__MICRO
+LIB SETA 1" --predefine="__UVISION_VERSION SETA 521" --predefine="_RTE_ SETA 1"
+ --predefine="STM32L431xx SETA 1" --list=startup_stm32l431xx.lst startup_stm32l
+431xx.s
 
 
 
